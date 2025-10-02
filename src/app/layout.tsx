@@ -3,6 +3,8 @@ import { inter } from "@/lib/fonts";
 import "./globals.css";
 import TanstackProvider from "@/lib/providers/TanstackProvider";
 import ReduxProvider from "@/lib/providers/ReduxToolkitProvider";
+import NavBar from "@/components/NavBar";
+import MobileNavBar from "@/components/MobileNavBar";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -18,7 +20,13 @@ export default function RootLayout({
     <html lang="en">
       <ReduxProvider>
         <TanstackProvider>
-          <body className={`${inter.className} antialiased`}>{children}</body>
+          <body
+            className={`${inter.className} antialiased relative min-h-screen`}
+          >
+            {<MobileNavBar />}
+            <NavBar />
+            {children}
+          </body>
         </TanstackProvider>
       </ReduxProvider>
     </html>

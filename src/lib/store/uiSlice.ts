@@ -5,15 +5,18 @@ interface InitialUiState {
 }
 
 const initialUiState: InitialUiState = {
-  mobileNavIsOpen: false,
+  mobileNavIsOpen: true,
 };
 
 export const uiSlice = createSlice({
   name: "ui",
   initialState: initialUiState,
   reducers: {
-    toggleMobileNav: (state) => {
-      state.mobileNavIsOpen = !state.mobileNavIsOpen;
+    openMobileNav: (state) => {
+      state.mobileNavIsOpen = true;
+    },
+    closeMobileNav: (state) => {
+      state.mobileNavIsOpen = false;
     },
   },
 });
