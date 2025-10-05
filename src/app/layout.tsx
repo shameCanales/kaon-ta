@@ -5,6 +5,7 @@ import TanstackProvider from "@/lib/providers/TanstackProvider";
 import ReduxProvider from "@/lib/providers/ReduxToolkitProvider";
 import NavBar from "@/components/NavBar";
 import MobileNavBar from "@/components/MobileNavBar";
+import Footer from "@/components/sections/Footer";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -26,6 +27,7 @@ export default function RootLayout({
             {<MobileNavBar />}
             <NavBar />
             {children}
+            <Footer />
           </body>
         </TanstackProvider>
       </ReduxProvider>

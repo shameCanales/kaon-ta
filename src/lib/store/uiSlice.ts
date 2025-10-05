@@ -5,7 +5,7 @@ interface InitialUiState {
 }
 
 const initialUiState: InitialUiState = {
-  mobileNavIsOpen: true,
+  mobileNavIsOpen: false,
 };
 
 export const uiSlice = createSlice({

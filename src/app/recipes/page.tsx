@@ -1,7 +1,7 @@
 "use client";
 
 import { useGetRandomRecipes } from "@/lib/hooks/useGetRandomRecipes";
-import { Recipe } from "@/lib/types/recipe";
+import { Recipe } from "@/lib/types/Recipe";
 import Image from "next/image";
 import { montserrat } from "@/lib/fonts";
 import Link from "next/link";
@@ -18,7 +18,6 @@ export default function Recipes() {
         Popular Recipes
       </h1>
       <ul className="grid gap-4 mt-5">
-
         {data?.map((recipe: Recipe) => (
           <Link key={recipe.id} href={`/recipes/${recipe.id}`}>
             <li className="shadow-sm  bg-stone-50 rounded-2xl">
