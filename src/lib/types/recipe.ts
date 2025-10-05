@@ -4,6 +4,8 @@ export interface Recipe {
   image: string;
   readyInMinutes: number;
   healthScore: number;
+  pricePerServing: number;
+  dishTypes: string[];
 }
 
 export interface RandomRecipesResponse {

@@ -26,7 +26,12 @@ export default function MobileNavBar() {
     mobileNavIsOpen && (
       <div className="absolute z-99 top-0 left-0 w-full h-full bg-stone-950/80 text-stone-50 pt-10">
         <div className="flex justify-end">
-          <button className="font-bold mr-5" onClick={() => handleCloseMobileNav()}>X Close</button>
+          <button
+            className="font-bold mr-5"
+            onClick={() => handleCloseMobileNav()}
+          >
+            X Close
+          </button>
         </div>
         <div className="flex justify-center mt-15">
           <ul className="grid gap-10 text-center">
@@ -41,7 +46,7 @@ export default function MobileNavBar() {
               </Link>
             </li>
             <li>
-              <Link href="/">
+              <Link href="/favourites">
                 <p>Favorites</p>
               </Link>
             </li>
