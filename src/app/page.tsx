@@ -2,7 +2,8 @@ import { montserrat } from "@/lib/fonts";
 import Image from "next/image";
 import { FeatureInfo } from "@/lib/types/featureInfo";
 import FeatureCard from "@/components/FeatureCard";
-// ...existing code...
+
+
 const featuresInfo: Pick<
   FeatureInfo,
   "imageName" | "title" | "description" | "iconBg"
@@ -68,6 +69,7 @@ const featuresInfo: Pick<
 export default function Home() {
   return (
     <div>
+
       <div className="bg-indigo-400 pt-16 pb-25 px-5 rounded-bl-[100px]">
         <div className="pt-15">
           <p className="mt-5 text-xs font-bold text-stone-200">
