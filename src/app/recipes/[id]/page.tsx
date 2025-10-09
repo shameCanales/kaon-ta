@@ -4,11 +4,17 @@ import { useParams } from "next/navigation";
 import Image from "next/image";
 import { useGetRecipeById } from "@/lib/hooks/useGetRecipeById";
 import { montserrat } from "@/lib/fonts";
+import { useState } from "react";
 
 export default function RecipeDetails() {
   const params = useParams();
   const { id } = params;
   const { data, isLoading, isError, error } = useGetRecipeById(Number(id));
+  const [seeMoreDescription, setSeeMoreDescription] = useState(false);
+
+  const handleSeeMoreDescription = () => {
+    setSeeMoreDescription(!seeMoreDescription);
+  };
 
   let content = (
     <div>
@@ -33,10 +39,12 @@ export default function RecipeDetails() {
   }
 
   if (data) {
+    const cleanSummary = data.summary.replace(/<[^>]*>/g, "");
+
     content = (
       <div className="px-4">
         <Image
-          className="rounded-b-4xl h-[391px] "
+          className="rounded-b-4xl aspect-square h-[391px] "
           src={data.image}
           alt={data.title}
           width={1920}
@@ -57,7 +65,7 @@ export default function RecipeDetails() {
               <p className="text-stone-600">
                 <span
                   className={`font-bold text-2xl text-stone-950 uppercase ${montserrat.className}`}
-                >{`${data.preparationMinutes ?? 0} `}</span>
+                >{`${data.preparationMinutes ?? "?"} `}</span>
                 min
               </p>
             </div>
@@ -75,7 +83,7 @@ export default function RecipeDetails() {
               <p className="text-stone-600">
                 <span
                   className={`font-bold text-2xl text-stone-950 uppercase ${montserrat.className}`}
-                >{`${data.cookingMinutes ?? 0} `}</span>
+                >{`${data.cookingMinutes ?? "?"} `}</span>
                 min
               </p>
             </div>
@@ -113,21 +121,47 @@ export default function RecipeDetails() {
               width={1920}
               height={1080}
             />
-            <p className="flex items-center">
+            <p className="flex items-center text-emerald-600">
               {data.aggregateLikes} people like this
             </p>
           </div>
+
+          <p
+            className={`mt-4 ${montserrat.className} ${
+              seeMoreDescription ? "line-clamp-none" : "line-clamp-5"
+            }`}
+          >
+            {cleanSummary}
+          </p>
+          <button
+            className={`font-bold text-sm ${montserrat.className}`}
+            onClick={() => handleSeeMoreDescription()}
+          >
+            {seeMoreDescription ? "See Less" : "See More..."}
+          </button>
         </div>
 
-        <div className="">
-          <p dangerouslySetInnerHTML={{ __html: data.summary }}></p>
-          <div className="mt-4 space-y-2">
-            <p>
-              <strong>Ready in:</strong> {data.readyInMinutes} minutes
-            </p>
-            <p>
-              <strong>Servings:</strong> {data.servings}
-            </p>
+        <div className="mt-5">
+          <ul className="flex flex-wrap gap-4">
+            {data.diets.map((diet) => (
+              <li key={diet}>
+                <p className={ `px-5 py-2 rounded-4xl text-sm bg-slate-200 text-stone-600 font-bold ${montserrat.className}`}>{diet}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className={`mt-10 font-extrabold text-3xl ${montserrat.className}`}>
+          <p>Ingredients</p>
+
+          <div>
+           <ul>
+             {/* {data.extendedIngredients.map((ing) => (
+              <li key={ing.}>
+
+              </li>
+            ))} */}
+           </ul>
           </div>
         </div>
       </div>
