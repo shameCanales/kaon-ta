@@ -34,6 +34,7 @@ export default function RecipeDetails() {
     content = (
       <div>
         <h1>Something went wrong...</h1>
+        <p>${error.message}</p>
       </div>
     );
   }
@@ -44,7 +45,7 @@ export default function RecipeDetails() {
     content = (
       <div className="px-4">
         <Image
-          className="rounded-b-4xl aspect-square h-[391px] "
+          className="rounded-b-4xl  h-[391px] "
           src={data.image}
           alt={data.title}
           width={1920}
@@ -113,21 +114,27 @@ export default function RecipeDetails() {
             {data.title}
           </h1>
 
-          <div className="flex items-center gap-1">
-            <Image
-              className={`w-[16px] ${montserrat.className}`}
-              src={"/social-network.png"}
-              alt={data.title}
-              width={1920}
-              height={1080}
-            />
-            <p className="flex items-center text-emerald-600">
-              {data.aggregateLikes} people like this
-            </p>
+          <div className="flex justify-between mt-5">
+            <div className="flex items-center gap-1">
+              <Image
+                className={`w-[16px] ${montserrat.className}`}
+                src={"/social-network.png"}
+                alt={data.title}
+                width={1920}
+                height={1080}
+              />
+              <p className="flex items-center text-emerald-600">
+                {data.aggregateLikes} people like this
+              </p>
+            </div>
+
+            <button className="text-stone-100 rounded-3xl px-4 py-2 bg-emerald-600">
+              Add To Favourites
+            </button>
           </div>
 
           <p
-            className={`mt-4 ${montserrat.className} ${
+            className={`mt-6 ${montserrat.className} ${
               seeMoreDescription ? "line-clamp-none" : "line-clamp-5"
             }`}
           >
@@ -145,23 +152,43 @@ export default function RecipeDetails() {
           <ul className="flex flex-wrap gap-4">
             {data.diets.map((diet) => (
               <li key={diet}>
-                <p className={ `px-5 py-2 rounded-4xl text-sm bg-slate-200 text-stone-600 font-bold ${montserrat.className}`}>{diet}</p>
+                <p
+                  className={`px-5 py-2 rounded-4xl text-sm bg-slate-200 text-stone-600 font-bold ${montserrat.className}`}
+                >
+                  {diet}
+                </p>
               </li>
             ))}
           </ul>
         </div>
 
-        <div className={`mt-10 font-extrabold text-3xl ${montserrat.className}`}>
-          <p>Ingredients</p>
+        <div>
+          <p
+            className={`mt-10 font-extrabold text-3xl ${montserrat.className}`}
+          >
+            Ingredients
+          </p>
 
-          <div>
-           <ul>
-             {/* {data.extendedIngredients.map((ing) => (
-              <li key={ing.}>
-
-              </li>
-            ))} */}
-           </ul>
+          <div className="mt-5">
+            <ul className="grid gap-2">
+              {data.extendedIngredients.map((ing) => (
+                <li key={ing.id}>
+                  {/* <div>
+                    <Image src={ing.image} alt={ing.name} width={500} height={500} />
+                  </div> */}
+                  <div
+                    className={`p-4 px-8 rounded-2xl bg-gray-300 ${montserrat.className}`}
+                  >
+                    <p className="font-bold  text-stone-800">
+                      {ing.originalName}
+                    </p>
+                    <p className="text-sm ">
+                      {ing.measures.us.amount} - {ing.measures.us.unitShort}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>
