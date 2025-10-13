@@ -1,11 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import uiSlice from "./uiSlice";
-
-
+import favouritesSlice from "./favouritesSlice";
 
 export const store = configureStore({
   reducer: {
     ui: uiSlice.reducer,
+    favourites: favouritesSlice.reducer,
   },
 });
 
