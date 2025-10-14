@@ -20,6 +20,10 @@ export default function RecipeDetails() {
     setSeeMoreDescription(!seeMoreDescription);
   };
 
+  const handleAddToFavourites = () => {
+    dispatch(favouritesActions.addToFavourites({id}));
+  };
+
   let content = (
     <div>
       <h1>Refresh page to get information</h1>
@@ -133,7 +137,7 @@ export default function RecipeDetails() {
             </div>
 
             <button
-              onClick={() => dispatch(favouritesActions.addToFavourites(id))}
+              onClick={() => handleAddToFavourites()}
               className="text-stone-100 rounded-3xl px-4 py-2 bg-emerald-600"
             >
               Add To Favourites
@@ -216,7 +220,7 @@ export default function RecipeDetails() {
 
                 <ul className="mt-5 flex flex-wrap gap-2">
                   {step.ingredients?.map((ing) => (
-                    <li className="" key={ing.id}>
+                    <li className="" key={ing.name}>
                       <p className="px-4 py-2 rounded-4xl bg-slate-50 text-stone-900 font-bold text-sm">{`${ing.name}`}</p>
                     </li>
                   ))}

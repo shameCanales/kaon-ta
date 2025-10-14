@@ -5,7 +5,7 @@ interface InitialFavouritesState {
 }
 
 const initialFavouritesState: InitialFavouritesState = {
-  favouriteRecipes: [],
+  favouriteRecipes: [715588, 636632, 649141],
 };
 
 export const favouritesSlice = createSlice({
@@ -15,6 +15,13 @@ export const favouritesSlice = createSlice({
     addToFavourites: (state, action) => {
       const { id } = action.payload;
       state.favouriteRecipes.push(id);
+      console.log(id, [...state.favouriteRecipes]);
+    },
+    removeInFavourites: (state, action) => {
+      const { id } = action.payload;
+      state.favouriteRecipes = state.favouriteRecipes.filter(
+        (recipeId) => recipeId !== id
+      );
     },
   },
 });
