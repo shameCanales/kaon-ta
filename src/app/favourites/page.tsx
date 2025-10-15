@@ -1,22 +1,17 @@
 "use client";
 
 import { RootState } from "@/lib/store/store";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useGetFavouriteRecipes } from "@/lib/hooks/useGetFavouriteRecipes";
-import { AppDispatch } from "@/lib/store/store";
-import { favouritesActions } from "@/lib/store/favouritesSlice";
 import RecipeCard from "@/components/RecipeCard";
+import Link from "next/link";
 
 export default function FavouritesPage() {
-  const dispatch = useDispatch<AppDispatch>();
   const favouriteRecipes = useSelector(
     (state: RootState) => state.favourites.favouriteRecipes
   );
 
-  const handleRemoveFromFavourites = (id: number) => {
-    console.log(id);
-    dispatch(favouritesActions.removeInFavourites({ id }));
-  };
+  console.log(favouriteRecipes);
 
   const { data, isLoading, isError, error } =
     useGetFavouriteRecipes(favouriteRecipes);
@@ -49,21 +44,25 @@ export default function FavouritesPage() {
 
   if (data) {
     return (
-      <div className="pt-26">
-        <h1>My Favourites</h1>
+      <div className="pt-26 px-4">
+        <h1 className="font-bold text-3xl">
+          {favouriteRecipes.length === 0
+            ? "No Favourites Yet."
+            : "My Favourites"}
+        </h1>
+        {favouriteRecipes.length === 0 && (
+          <p>
+            Explore <Link href={"/recipes"}>Recipes</Link> and mark as favourite
+          </p>
+        )}
 
-        <div>
+        <div className=" grid gap-2 mt-5">
           {data.map((recipe) => (
-            <div key={recipe.title}>
-              <RecipeCard recipe={recipe} />
-              <h1>{recipe.title}</h1>
-
-              <button onClick={() => handleRemoveFromFavourites(recipe.id)}>
-                Remove
-              </button>
-            </div>
+            <RecipeCard key={recipe.title} recipe={recipe} />
           ))}
         </div>
+
+        {}
       </div>
     );
   }

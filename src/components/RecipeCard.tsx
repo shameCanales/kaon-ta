@@ -1,11 +1,16 @@
-"use client";
 import Link from "next/link";
 import Image from "next/image";
+import ToggleFavourite from "./ui/ToggleFavourite";
+import { Recipe } from "@/lib/types/Recipe";
 
-export default function RecipeCard({ recipe }) {
+export default function RecipeCard({ recipe }: { recipe: Recipe }) {
   return (
-    <Link key={recipe.id} href={`/recipes/${recipe.id}`}>
-      <li className="shadow-sm  bg-stone-50 rounded-2xl">
+    <li className="shadow-sm relative bg-stone-50 rounded-2xl">
+      <div className="absolute top-2 right-2">
+        <ToggleFavourite id={recipe.id} />
+      </div>
+
+      <Link href={`/recipes/${recipe.id}`}>
         <Image
           src={recipe.image}
           alt={recipe.title}
@@ -65,7 +70,7 @@ export default function RecipeCard({ recipe }) {
             })}
           </div>
         </div>
-      </li>
-    </Link>
+      </Link>
+    </li>
   );
 }

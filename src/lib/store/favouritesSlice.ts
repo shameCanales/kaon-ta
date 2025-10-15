@@ -4,24 +4,36 @@ interface InitialFavouritesState {
   favouriteRecipes: number[];
 }
 
+let storedFavourites = [];
+
+if (typeof window !== "undefined") {
+  try {
+    const storedRawFavourites = localStorage.getItem("favourites");
+    storedFavourites = storedRawFavourites
+      ? JSON.parse(storedRawFavourites)
+      : [];
+  } catch (error) {
+    console.error("Invalid FavouriteItems in localstorage", error);
+  }
+}
+
 const initialFavouritesState: InitialFavouritesState = {
-  favouriteRecipes: [715588, 636632, 649141],
+  favouriteRecipes: storedFavourites,
 };
 
 export const favouritesSlice = createSlice({
   name: "favourites",
   initialState: initialFavouritesState,
   reducers: {
-    addToFavourites: (state, action) => {
+    toggleFavourite: (state, action) => {
       const { id } = action.payload;
-      state.favouriteRecipes.push(id);
-      console.log(id, [...state.favouriteRecipes]);
-    },
-    removeInFavourites: (state, action) => {
-      const { id } = action.payload;
-      state.favouriteRecipes = state.favouriteRecipes.filter(
-        (recipeId) => recipeId !== id
-      );
+      const index = state.favouriteRecipes.indexOf(id);
+
+      if (index >= 0) {
+        state.favouriteRecipes.splice(index, 1);
+      } else {
+        state.favouriteRecipes.push(id);
+      }
     },
   },
 });

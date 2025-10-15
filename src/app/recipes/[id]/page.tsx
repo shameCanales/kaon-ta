@@ -2,26 +2,20 @@
 
 import { useParams } from "next/navigation";
 import Image from "next/image";
-import { useGetRecipeById } from "@/lib/hooks/useGetRecipeById";
-import { montserrat } from "@/lib/fonts";
 import { useState } from "react";
-import { favouritesActions } from "@/lib/store/favouritesSlice";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/lib/store/store";
+import { useGetRecipeById } from "@/lib/hooks/useGetRecipeById";
+import ToggleFavourite from "@/components/ui/ToggleFavourite";
+import { montserrat } from "@/lib/fonts";
+import { Ingredient, InstructionStep } from "@/lib/types/Recipe";
 
 export default function RecipeDetails() {
   const params = useParams();
-  const dispatch = useDispatch<AppDispatch>();
   const { id } = params;
   const { data, isLoading, isError, error } = useGetRecipeById(Number(id));
   const [seeMoreDescription, setSeeMoreDescription] = useState(false);
 
   const handleSeeMoreDescription = () => {
     setSeeMoreDescription(!seeMoreDescription);
-  };
-
-  const handleAddToFavourites = () => {
-    dispatch(favouritesActions.addToFavourites({id}));
   };
 
   let content = (
@@ -136,12 +130,7 @@ export default function RecipeDetails() {
               </p>
             </div>
 
-            <button
-              onClick={() => handleAddToFavourites()}
-              className="text-stone-100 rounded-3xl px-4 py-2 bg-emerald-600"
-            >
-              Add To Favourites
-            </button>
+            <ToggleFavourite id={data.id} />
           </div>
 
           <p
@@ -161,7 +150,7 @@ export default function RecipeDetails() {
 
         <div className="mt-5">
           <ul className="flex flex-wrap gap-4">
-            {data.diets.map((diet) => (
+            {data.diets.map((diet: string) => (
               <li key={diet}>
                 <p
                   className={`px-5 py-2 rounded-4xl text-sm bg-slate-200 text-stone-600 font-bold ${montserrat.className}`}
@@ -182,7 +171,7 @@ export default function RecipeDetails() {
 
           <div className="mt-5">
             <ul className="grid gap-2">
-              {data.extendedIngredients.map((ing) => (
+              {data.extendedIngredients.map((ing: Ingredient) => (
                 <li key={ing.id}>
                   {/* <div>
                     <Image src={ing.image} alt={ing.name} width={500} height={500} />
@@ -210,23 +199,25 @@ export default function RecipeDetails() {
           </p>
 
           <ul className="mt-5 grid gap-4">
-            {data.analyzedInstructions[0]?.steps?.map((step) => (
-              <li
-                className="rounded-lg bg-emerald-600 text-stone-50 px-4 py-6"
-                key={step.number}
-              >
-                <p className="text-2xl font-bold">Step {`${step.number}`}</p>
-                <p className="text-md mt-4">{step.step}</p>
+            {data.analyzedInstructions[0]?.steps?.map(
+              (step: InstructionStep) => (
+                <li
+                  className="rounded-lg bg-emerald-600 text-stone-50 px-4 py-6"
+                  key={step.number}
+                >
+                  <p className="text-2xl font-bold">Step {`${step.number}`}</p>
+                  <p className="text-md mt-4">{step.step}</p>
 
-                <ul className="mt-5 flex flex-wrap gap-2">
-                  {step.ingredients?.map((ing) => (
-                    <li className="" key={ing.name}>
-                      <p className="px-4 py-2 rounded-4xl bg-slate-50 text-stone-900 font-bold text-sm">{`${ing.name}`}</p>
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            ))}
+                  <ul className="mt-5 flex flex-wrap gap-2">
+                    {step.ingredients?.map((ing) => (
+                      <li className="" key={ing.name}>
+                        <p className="px-4 py-2 rounded-4xl bg-slate-50 text-stone-900 font-bold text-sm">{`${ing.name}`}</p>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              )
+            )}
           </ul>
         </div>
       </div>

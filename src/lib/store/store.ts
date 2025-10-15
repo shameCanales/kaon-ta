@@ -9,5 +9,13 @@ export const store = configureStore({
   },
 });
 
+if (typeof window !== "undefined") {
+  store.subscribe(() => {
+    const state: RootState = store.getState();
+    const { favouriteRecipes } = state.favourites;
+    localStorage.setItem("favourites", JSON.stringify(favouriteRecipes));
+  });
+}
+
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
