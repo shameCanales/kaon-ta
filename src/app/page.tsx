@@ -1,6 +1,6 @@
 import { montserrat } from "@/lib/fonts";
-import { FeatureInfo } from "@/lib/types/featureInfo";
 import FeatureCard from "@/components/FeatureCard";
+import { FeatureInfo } from "@/lib/types/FeatureInfo";
 
 const featuresInfo: Pick<
   FeatureInfo,
