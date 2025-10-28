@@ -7,7 +7,6 @@ import { Ingredient, InstructionStep } from "@/lib/types/Recipe";
 import { useGetRecipeById } from "@/lib/hooks/useGetRecipeById";
 import ToggleFavourite from "@/components/ui/ToggleFavourite";
 import { montserrat } from "@/lib/fonts";
-// import { Ingredient, InstructionStep } from "@/lib/types/Recipe";
 
 export default function RecipeDetails() {
   const params = useParams();
