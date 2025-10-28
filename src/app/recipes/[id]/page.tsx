@@ -194,15 +194,33 @@ export default function RecipeDetails() {
 
         <div className={`mt-10 ${montserrat.className}`}>
           <p className={` text-3xl font-extrabold `}>Recipe Steps</p>
-          <p className=" py-4 text-lg text-stone-600 font-bold">
-            Steps: {`${data.analyzedInstructions[0]?.steps?.length || 0}`}
-          </p>
+
+          <div className="mt-4 flex gap-3 bg-gray-300 py-3 px-4 rounded-3xl items-center text-stone-600 font-medium ">
+            <p className={`text-lg  border-r-1 pr-3 border-r-gray-400`}>
+              Steps: {`${data.analyzedInstructions[0]?.steps?.length || 0}`}
+            </p>
+
+            <div className="flex items-center gap-2">
+              <Image
+                className="w-[16px] "
+                src={"/duration-alt.png"}
+                alt={data.title}
+                width={1920}
+                height={1080}
+              />
+              <p>
+                {`${data.readyInMinutes || "?"} min${
+                  data.readyInminutes > 0 ? "s" : ""
+                }`}{" "}
+              </p>
+            </div>
+          </div>
 
           <ul className="mt-5 grid gap-4">
             {data.analyzedInstructions[0]?.steps?.map(
               (step: InstructionStep) => (
                 <li
-                  className="rounded-lg bg-emerald-600 text-stone-50 px-4 py-6"
+                  className="rounded-lg bg-indigo-500 text-stone-50 px-4 py-6"
                   key={step.number}
                 >
                   <p className="text-2xl font-bold">Step {`${step.number}`}</p>
